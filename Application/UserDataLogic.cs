@@ -18,9 +18,13 @@ namespace GithubUserDataApplication
             _gitHubClient = client;  
         }
 
-        public int GetRepositoryCount(string username)
+        public async Task<int> GetRepositoryCount(string username)
         {
+            var user = await _gitHubClient.User.Get(username);
+            if(user)
+                return user.PublicRepos; 
             return -1; 
+
             //TODO return await github.User.Get("half-ogre");
         }
 

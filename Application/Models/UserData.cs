@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GithubUserDataApplication.Models
 {
-    internal class UserData
+    public class UserData
     {
         public string Username { get; set; }
         public int RepoCount { get; set; }

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using GithubUserDataApplication;
+using GithubUserDataApplication.Models; 
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GithubUserDataAPI.Controllers
@@ -7,11 +9,16 @@ namespace GithubUserDataAPI.Controllers
     [ApiController]
     public class UserDataController : ControllerBase
     {
+        private readonly IUserDataLogic _userDataLogic; 
+        public UserDataController(IUserDataLogic userDataLogic)
+        {
+            _userDataLogic = userDataLogic; 
+        }
 
         [HttpGet("{username}")]
-        public IActionResult GetUserData(string username)
+        public async Task<UserData> GetUserData(string username)
         {
-            return Ok("Hello" + username); 
+            return await _userDataLogic.GetUserData(username); 
         }
     }
 }

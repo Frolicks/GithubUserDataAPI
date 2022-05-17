@@ -6,22 +6,18 @@ using ByteSizeLib;
 using GithubUserDataApplication.Models;
 using Octokit;
 
-//TODO -total repository count,
-// total stargazers for all repos,
-// total fork count for all repos,
-// average size of a repo,
-// list of languages with their counts sorted by usage
+
 namespace GithubUserDataApplication
 {
     /// <summary>
     /// This class contains the logic for getting user data from Github and returning UserData objects. 
     /// </summary>
-    internal class UserDataLogic
+    public class UserDataLogic : IUserDataLogic
     {
         private readonly GitHubClient _gitHubClient;
-        public UserDataLogic(GitHubClient client)
+        public UserDataLogic()
         {
-            _gitHubClient = client;  
+            _gitHubClient = new GitHubClient(new ProductHeaderValue("GithubUserData"));
         }
 
         public async Task<UserData> GetUserData(string username, bool includeForked = false)
@@ -32,10 +28,10 @@ namespace GithubUserDataApplication
             int repoCount = repos.Count();
 
             int totalStarGazers = 0;
-            int totalForkCount = 0; 
-            long totalSize = 0; 
-            Dictionary<string, int> languages = new Dictionary<string, int>(); 
-            foreach(Repository r in repos)
+            int totalForkCount = 0;
+            long totalSize = 0;
+            Dictionary<string, int> languages = new Dictionary<string, int>();
+            foreach (Repository r in repos)
             {
                 totalStarGazers += r.StargazersCount;
                 totalForkCount += r.ForksCount;
@@ -49,24 +45,20 @@ namespace GithubUserDataApplication
 
             }
 
-            
+
             string avgRepoSize = ByteSize.FromKiloBytes((totalSize / (long)repoCount)).ToString();
             var sortedLanguages = from entry in languages orderby entry.Value descending select entry;
-            return new UserData(username, repoCount, totalStarGazers, totalForkCount, avgRepoSize, sortedLanguages); 
+            return new UserData(username, repoCount, totalStarGazers, totalForkCount, avgRepoSize, sortedLanguages);
         }
 
-        /// <summary>
-        /// </summary>
-        /// <param name="username"></param>
-        /// <returns></returns>
         private async Task<IEnumerable<Repository>> GetRepositoryList(string username, bool includeForked = false)
         {
-            SearchRepositoriesRequest request = new SearchRepositoriesRequest() { User = username}; 
+            SearchRepositoriesRequest request = new SearchRepositoriesRequest() { User = username };
             if (includeForked)
-                request = new SearchRepositoriesRequest() { User = username, Fork = ForkQualifier.IncludeForks};
-            Console.Write($"Fork status: {request.Fork}");
+                request = new SearchRepositoriesRequest() { User = username, Fork = ForkQualifier.IncludeForks };
+
             var result = await _gitHubClient.Search.SearchRepo(request);
-            return result.Items; 
+            return result.Items;
         }
 
     }

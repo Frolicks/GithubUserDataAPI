@@ -23,8 +23,6 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <h3 align="center">GithubUserDataAPI</h3>
-
   <p align="center">
     A Web API to get a Github User's stats in JSON format. Stats include total repositories, stargazers, forks; as well as average repo size and popular languages. 
     <br />

@@ -18,13 +18,6 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
 
 
 <!-- PROJECT LOGO -->
@@ -36,7 +29,7 @@
     A Web API to get a Github User's stats in JSON format. Stats include total repositories, stargazers, forks; as well as average repo size and popular languages. 
     <br />
     <a href="https://github.com/Frolicks/GithubUserDataAPI">View Demo</a>
-    ·
+    Â·
     <a href="https://github.com/Frolicks/GithubUserDataAPI/issues">Report Bug</a>
   </p>
 </div>

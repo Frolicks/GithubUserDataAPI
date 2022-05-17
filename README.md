@@ -26,9 +26,6 @@
   <p align="center">
     A Web API to get a Github User's stats in JSON format. Stats include total repositories, stargazers, forks; as well as average repo size and popular languages. 
     <br />
-    <a href="https://github.com/Frolicks/GithubUserDataAPI">View Demo</a>
-    ·
-    <a href="https://github.com/Frolicks/GithubUserDataAPI/issues">Report Bug</a>
   </p>
 </div>
 

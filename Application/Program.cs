@@ -3,8 +3,7 @@ using GithubUserDataApplication;
 using Octokit;
 
 
-
-//var testUsername = "seantomburke"; 
+//var testUsername = "sdfsdfsdf2324324esdf;dsf;dsf";
 //var a = new UserDataLogic();
 //var dataString = await a.GetUserData(testUsername, true);
-Console.WriteLine("hello");
+Console.WriteLine("Application successfully loaded.");

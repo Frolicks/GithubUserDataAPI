@@ -2,7 +2,7 @@
 using GithubUserDataApplication.Models; 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using Octokit; 
 namespace GithubUserDataAPI.Controllers
 {
     [Route("api/[controller]")]
@@ -16,9 +16,16 @@ namespace GithubUserDataAPI.Controllers
         }
 
         [HttpGet("{username}")]
-        public async Task<UserData> GetUserData(string username)
+        public async Task<ActionResult<UserData>> GetUserData(string username, bool includeForked = false)
         {
-            return await _userDataLogic.GetUserData(username); 
+            try
+            {
+                return await _userDataLogic.GetUserData(username, includeForked);
+            } catch(ApiValidationException e)
+            { 
+                return new BadRequestObjectResult(e.Message); 
+            }   
+            
         }
     }
 }

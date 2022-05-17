@@ -24,9 +24,9 @@ namespace GithubUserDataApplication
             _gitHubClient = client;  
         }
 
-        public async Task<UserData> GetUserData(string username)
+        public async Task<UserData> GetUserData(string username, bool includeForked = false)
         {
-            var repos = await GetRepositoryList(username);
+            var repos = await GetRepositoryList(username, includeForked);
 
             //get repoCount
             int repoCount = repos.Count();
@@ -56,16 +56,15 @@ namespace GithubUserDataApplication
         }
 
         /// <summary>
-        /// TODO include forked 
         /// </summary>
         /// <param name="username"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<Repository>> GetRepositoryList(string username)
+        private async Task<IEnumerable<Repository>> GetRepositoryList(string username, bool includeForked = false)
         {
-            var request = new SearchRepositoriesRequest()
-            {
-                User = username
-            };
+            SearchRepositoriesRequest request = new SearchRepositoriesRequest() { User = username}; 
+            if (includeForked)
+                request = new SearchRepositoriesRequest() { User = username, Fork = ForkQualifier.IncludeForks};
+            Console.Write($"Fork status: {request.Fork}");
             var result = await _gitHubClient.Search.SearchRepo(request);
             return result.Items; 
         }

@@ -4,10 +4,9 @@ using Octokit;
 
 
 
-var testUsername = "Frolicks"; 
-var github = new GitHubClient(new ProductHeaderValue("GithubUserData"));
-var userDataLogic = new UserDataLogic(github);
+//var testUsername = "seantomburke"; 
+//var github = new GitHubClient(new ProductHeaderValue("GithubUserData"));
+//var userDataLogic = new UserDataLogic(github);
 
-
-var a = await userDataLogic.GetUserData(testUsername);
-Console.WriteLine(a); 
+//var dataString = await userDataLogic.GetUserData(testUsername, true);
+//Console.WriteLine(dataString);

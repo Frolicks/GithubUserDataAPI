@@ -1,9 +1,9 @@
-using GithubUserDataApplication; 
+using GithubUserDataApplication;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddSingleton<IUserDataLogic, UserDataLogic>(); 
+builder.Services.AddSingleton<IUserDataLogic, UserDataLogic>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

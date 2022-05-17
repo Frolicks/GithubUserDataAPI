@@ -53,9 +53,10 @@ namespace GithubUserDataApplication
 
         private async Task<IEnumerable<Repository>> GetRepositoryList(string username, bool includeForked = false)
         {
-            SearchRepositoriesRequest request = new SearchRepositoriesRequest() { User = username };
+            var request = new SearchRepositoriesRequest() { User = username };
+
             if (includeForked)
-                request = new SearchRepositoriesRequest() { User = username, Fork = ForkQualifier.IncludeForks };
+                request.Fork = ForkQualifier.IncludeForks;
 
             var result = await _gitHubClient.Search.SearchRepo(request);
             return result.Items;

@@ -52,8 +52,6 @@ Key Features
 
 Constraints:
 - Total Repo size doesn't account for shared objects, and thus may be less than actual size: https://stackoverflow.com/questions/8646517/how-can-i-see-the-size-of-a-github-repository-before-cloning-it
-- The second consecutive call to SearchRepo() will have the SearchOptions of the prior call (e.g. If the first call has ExcludeForkedRepos, and the second has IncludeForkedRepos, then the second will still exclude forked repo in its result). 
-
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

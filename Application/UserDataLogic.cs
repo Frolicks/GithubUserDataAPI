@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ByteSizeLib;
 using GithubUserDataApplication.Models;
 using Octokit;
 
@@ -38,12 +39,20 @@ namespace GithubUserDataApplication
             {
                 totalStarGazers += r.StargazersCount;
                 totalForkCount += r.ForksCount;
-                totalSize += r.Size; 
+                totalSize += r.Size;
+
+                if (r.Language != null)
+                {
+                    int val = 0;
+                    languages[r.Language] = languages.TryGetValue(r.Language, out val) ? ++val : 1;
+                }
+
             }
 
-            long avgRepoSize = totalSize / (long)repoCount;
-
-            return new UserData(username, repoCount, totalStarGazers, totalForkCount, avgRepoSize, languages); 
+            
+            string avgRepoSize = ByteSize.FromKiloBytes((totalSize / (long)repoCount)).ToString();
+            var sortedLanguages = from entry in languages orderby entry.Value descending select entry;
+            return new UserData(username, repoCount, totalStarGazers, totalForkCount, avgRepoSize, sortedLanguages); 
         }
 
         /// <summary>

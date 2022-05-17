@@ -12,13 +12,13 @@ namespace GithubUserDataApplication.Models
         public int RepoCount { get; set; }
         public int StargazerCount { get; set; }
         public int ForkCount { get; set; }
-        public float AverageRepoSize { get; set; }
+        public string AverageRepoSize { get; set; }
 
 
         //todo sort langauges by usecount
-        public Dictionary<string, int> Languages { get; set; }
+        public IOrderedEnumerable<KeyValuePair<string,int>> Languages { get; set; }
 
-        public UserData(string p_username, int p_repoCount, int p_stargazerCount, int p_forkCount, float p_averageRepoSize, Dictionary<string, int> p_languages)
+        public UserData(string p_username, int p_repoCount, int p_stargazerCount, int p_forkCount, string p_averageRepoSize, IOrderedEnumerable<KeyValuePair<string, int>> p_languages)
         {
             Username = p_username;
             RepoCount = p_repoCount;
@@ -36,7 +36,7 @@ namespace GithubUserDataApplication.Models
             output += "\nLanguages: "; 
             foreach(KeyValuePair<string, int> entry in Languages)
             {
-                output += String.Format("{0} {1}", entry.Key, entry.Value); 
+                output += String.Format("{0} {1}\n", entry.Key, entry.Value); 
             }
             return output; 
         }

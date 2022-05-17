@@ -4,7 +4,10 @@ using Octokit;
 
 
 
+var testUsername = "Frolicks"; 
 var github = new GitHubClient(new ProductHeaderValue("GithubUserData"));
-var userDataLogic = new UserDataLogic(github); 
-//TODO figure out how to get int from get repositroy count (task))
-Console.WriteLine(userDataLogic.GetRepositoryCount("Frolicks")); 
+var userDataLogic = new UserDataLogic(github);
+
+
+var a = await userDataLogic.GetUserData(testUsername);
+Console.WriteLine(a); 

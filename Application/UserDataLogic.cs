@@ -1,10 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Octokit; 
+using GithubUserDataApplication.Models;
+using Octokit;
 
+//TODO -total repository count,
+// total stargazers for all repos,
+// total fork count for all repos,
+// average size of a repo,
+// list of languages with their counts sorted by usage
 namespace GithubUserDataApplication
 {
     /// <summary>
@@ -18,14 +23,42 @@ namespace GithubUserDataApplication
             _gitHubClient = client;  
         }
 
-        public async Task<int> GetRepositoryCount(string username)
+        public async Task<UserData> GetUserData(string username)
         {
-            var user = await _gitHubClient.User.Get(username);
-            if(user)
-                return user.PublicRepos; 
-            return -1; 
+            var repos = await GetRepositoryList(username);
 
-            //TODO return await github.User.Get("half-ogre");
+            //get repoCount
+            int repoCount = repos.Count();
+
+            int totalStarGazers = 0;
+            int totalForkCount = 0; 
+            long totalSize = 0; 
+            Dictionary<string, int> languages = new Dictionary<string, int>(); 
+            foreach(Repository r in repos)
+            {
+                totalStarGazers += r.StargazersCount;
+                totalForkCount += r.ForksCount;
+                totalSize += r.Size; 
+            }
+
+            long avgRepoSize = totalSize / (long)repoCount;
+
+            return new UserData(username, repoCount, totalStarGazers, totalForkCount, avgRepoSize, languages); 
+        }
+
+        /// <summary>
+        /// TODO include forked 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<Repository>> GetRepositoryList(string username)
+        {
+            var request = new SearchRepositoriesRequest()
+            {
+                User = username
+            };
+            var result = await _gitHubClient.Search.SearchRepo(request);
+            return result.Items; 
         }
 
     }
